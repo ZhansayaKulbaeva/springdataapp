@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>details</title>
+</head>
+<body>
+<form th:method="put" th:action="@{'/update'}">
+  <input type="hidden" name="id" th:value="${student.getId()}">
+  <input type="text" name="fullName" th:value="${student.getFullName()}">
+  <input type="text" name="exam" th:value="${student.getExam()}">
+  <button>UPDATE</button>
+</form>
+
+<form th:action="@{'/delete'}" th:method="delete">
+  <input type="hidden" name="id" th:value="${student.getId()}">
+  <button>DELETE</button>
+</form>
+</body>
+</html>
