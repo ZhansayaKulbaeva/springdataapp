@@ -30,7 +30,7 @@
             </div>
             <div class="row mt-2">
               <div class="col-12">
-                <input th:value="${appRequest.getCourseName()}" type="text" class="form-control" name="course" readonly>
+                <input th:value="${appRequest.getCourse().getName()}" type="text" class="form-control" name="course" readonly>
               </div>
             </div>
             <div class="row mt-3">
@@ -56,7 +56,9 @@
             <input type="hidden" name="handled" value="true">
             <div class="row mt-3">
               <div class="col-12">
-                <button class="btn btn-success">UPDATE</button>
+                <span th:if="${appRequest.isHandled()==false}">
+                  <button class="btn btn-success">UPDATE</button>
+                </span>
               </div>
             </div>
           </form>

@@ -1,7 +1,9 @@
 package kz.bitlab.springdataapp.controller;
 
 import kz.bitlab.springdataapp.model.ApplicationRequest;
+import kz.bitlab.springdataapp.model.Course;
 import kz.bitlab.springdataapp.repository.ApplicationRequestRepository;
+import kz.bitlab.springdataapp.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,13 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 public class HomeController {
 
     @Autowired
     private ApplicationRequestRepository applicationRequestRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
 
     @GetMapping("/")
     public String home(@RequestParam(value = "check", required = false) String checkValue,
@@ -33,13 +36,20 @@ public class HomeController {
     }
 
     @GetMapping("/newRequest")
-    public String newRequest() {
+    public String newRequest(Model model) {
+        model.addAttribute("courses", courseRepository.findAll());
         return "newRequest";
+    }
+
+    @GetMapping("/newCourse")
+    public String newCourse(Model model) {
+        model.addAttribute("courses", courseRepository.findAll());
+        return "newCourse";
     }
 
     @PostMapping("/addRequest")
     public String addRequest(@RequestParam("fullName") String username,
-                             @RequestParam("course") String courses,
+                             @RequestParam("course_id") Long courseId,
                              @RequestParam("comment") String comment,
                              @RequestParam("phoneNumber") String phoneNumber) {
 
@@ -47,11 +57,28 @@ public class HomeController {
         applicationRequest.setCommentary(comment);
         applicationRequest.setPhone(phoneNumber);
         applicationRequest.setUserName(username);
-        applicationRequest.setCourseName(courses);
+
+        Course course = courseRepository.findById(courseId).orElse(null);
+        applicationRequest.setCourse(course);
+//        applicationRequest.setCourseName(courses);
         applicationRequest.setHandled(false);
 
         applicationRequestRepository.save(applicationRequest);
         return "redirect:/";
+    }
+
+    @PostMapping("/addCourse")
+    public String addCourse(@RequestParam("name") String name,
+                            @RequestParam("price") String price,
+                            @RequestParam("desc") String desc) {
+        Course course = new Course();
+        course.setName(name);
+        course.setPrice(Integer.parseInt(price));
+        course.setDescription(desc);
+
+        courseRepository.save(course);
+
+        return "redirect:/newCourse";
     }
 
     @GetMapping("/details/{idshka}")

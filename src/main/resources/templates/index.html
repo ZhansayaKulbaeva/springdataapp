@@ -12,7 +12,7 @@
                                 </span>
                                 <span th:if="${appRequest.isHandled()==true}" th:text="${appRequest.getUserName()}"></span>
                             </h5>
-                            <p class="card-text" th:text="${appRequest.getCourseName()}"></p>
+                            <p class="card-text" th:text="${appRequest.getCourse().getName()}"></p>
                             <p class="card-text" th:text="${appRequest.getCommentary()}"></p>
                             <p class="card-text" th:text="${appRequest.getPhone()}"></p>
                             <a th:href="@{'/details/'+${appRequest.getId()}}" class="btn btn-success">Details</a>

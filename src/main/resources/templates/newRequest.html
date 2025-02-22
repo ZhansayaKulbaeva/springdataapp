@@ -22,10 +22,15 @@
             </div>
             <div class="row mt-2">
               <div class="col-12">
-                <select name="course" class="form-control">
-                  <option value="Java Developer">Java Developer</option>
-                  <option value="Go Developer">Go Developer</option>
-                  <option value="Python Developer">Python Developer</option>
+                <select name="course_id" class="form-control">
+                  <option th:each="course:${courses}"
+                          th:text="${course.getName() + ' / ' + course.getPrice()}"
+                          th:value="${course.getId()}">
+
+                  </option>
+<!--                  <option value="Java Developer">Java Developer</option>-->
+<!--                  <option value="Go Developer">Go Developer</option>-->
+<!--                  <option value="Python Developer">Python Developer</option>-->
                 </select>
               </div>
             </div>
