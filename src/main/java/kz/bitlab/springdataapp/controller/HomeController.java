@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class HomeController {
 
@@ -18,8 +20,15 @@ public class HomeController {
     private ApplicationRequestRepository applicationRequestRepository;
 
     @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("appRequests", applicationRequestRepository.findAll());
+    public String home(@RequestParam(value = "check", required = false) String checkValue,
+                       Model model) {
+        if ("handled".equals(checkValue)) {
+            model.addAttribute("appRequests", applicationRequestRepository.findAllByHandled(true));
+        } else if ("unhandled".equals(checkValue)) {
+            model.addAttribute("appRequests", applicationRequestRepository.findAllByHandled(false));
+        }else {
+            model.addAttribute("appRequests", applicationRequestRepository.findAllByOrderByHandledAscIdDesc());
+        }
         return "index";
     }
 
