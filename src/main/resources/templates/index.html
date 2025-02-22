@@ -1,0 +1,25 @@
+<html lang="en" layout:decorate="layout/main.html" xmlns:layout="http://www.w3.org/1999/xhtml">
+    <div layout:fragment="mainFragment">
+        <div>
+            <div class="row">
+                <div class="col-sm-6" th:each="appRequest:${appRequests}">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>
+                                <span th:if="${appRequest.isHandled()==false}">
+                                    <span style="color: red;">* New From</span>
+                                    <span th:text="${appRequest.getUserName()}"></span>
+                                </span>
+                                <span th:if="${appRequest.isHandled()==true}" th:text="${appRequest.getUserName()}"></span>
+                            </h5>
+                            <p class="card-text" th:text="${appRequest.getCourseName()}"></p>
+                            <p class="card-text" th:text="${appRequest.getCommentary()}"></p>
+                            <p class="card-text" th:text="${appRequest.getPhone()}"></p>
+                            <a th:href="@{'/details/'+${appRequest.getId()}}" class="btn btn-success">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

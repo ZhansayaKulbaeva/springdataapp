@@ -3,16 +3,8 @@
   <div>
     <div class="container" style="min-height: 500px;">
       <div class="row mt-3">
-        <div>
-          <span th:if="${appRequest.isHandled()==true}">
-              <h1 style="color: green">HANDLED!</h1>
-          </span>
-          <span th:if="${appRequest.isHandled()==false}">
-              <h1 style="color: red">*** NOT HANDLED! ***</h1>
-          </span>
-        </div>
         <div class="col-6 mx-auto">
-          <form th:action="@{'/update/'+${appRequest.getId()}}" th:method="put">
+          <form th:action="@{'/addRequest'}" method="post">
             <div class="row">
               <div class="col-12">
                 <label>FULL NAME:</label>
@@ -20,7 +12,7 @@
             </div>
             <div class="row mt-2">
               <div class="col-12">
-                <input th:value="${appRequest.getUserName()}" type="text" class="form-control" required placeholder="Full Name" name="fullName" readonly>
+                <input type="text" class="form-control" required placeholder="Full Name" name="fullName">
               </div>
             </div>
             <div class="row mt-3">
@@ -30,7 +22,11 @@
             </div>
             <div class="row mt-2">
               <div class="col-12">
-                <input th:value="${appRequest.getCourseName()}" type="text" class="form-control" name="course" readonly>
+                <select name="course" class="form-control">
+                  <option value="Java Developer">Java Developer</option>
+                  <option value="Go Developer">Go Developer</option>
+                  <option value="Python Developer">Python Developer</option>
+                </select>
               </div>
             </div>
             <div class="row mt-3">
@@ -40,7 +36,7 @@
             </div>
             <div class="row mt-2">
               <div class="col-12">
-                <input type="number" th:value="${appRequest.getPhone()}" class="form-control" required placeholder="+ 7 707 795 5750" name="phoneNumber" readonly>
+                <input type="number" class="form-control" required placeholder="+ 7 707 795 5750" name="phoneNumber">
               </div>
             </div>
             <div class="row mt-3">
@@ -50,13 +46,12 @@
             </div>
             <div class="row mt-2">
               <div class="col-12">
-                <textarea class="form-control" name="comment" th:text="${appRequest.getCommentary()}" readonly></textarea>
+                <textarea class="form-control" name="comment"></textarea>
               </div>
             </div>
-            <input type="hidden" name="handled" value="true">
             <div class="row mt-3">
               <div class="col-12">
-                <button class="btn btn-success">UPDATE</button>
+                <button class="btn btn-success">SUBMIT</button>
               </div>
             </div>
           </form>
