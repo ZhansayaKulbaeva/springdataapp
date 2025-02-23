@@ -17,7 +17,7 @@
         <td th:text="${course.getName()}"></td>
         <td th:text="${course.getPrice()}"></td>
         <td>
-          <a class="btn btn-success">DETAILS</a>
+          <a th:href="@{'/detailsCourse/' + ${course.getId()}}" class="btn btn-success">DETAILS</a>
         </td>
       </tr>
       </tbody>

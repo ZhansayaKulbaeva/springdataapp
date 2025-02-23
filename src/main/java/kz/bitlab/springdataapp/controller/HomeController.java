@@ -7,11 +7,7 @@ import kz.bitlab.springdataapp.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HomeController {
@@ -96,5 +92,31 @@ public class HomeController {
         applicationRequest.setHandled(handled);
         applicationRequestRepository.save(applicationRequest);
         return "redirect:/details/"+idshka;
+    }
+
+    @GetMapping("detailsCourse/{id}")
+    public String detailsCourse(@PathVariable("id") Long id, Model model){
+        Course course = courseRepository.findById(id).orElse(null);
+        if (course != null){
+            model.addAttribute("course", course);
+            return "detailsCourse";
+        } else {
+            return "redirect:/newCourse";
+        }
+    }
+
+    @PostMapping("/updateCourse")
+    public String editCourse(@ModelAttribute Course course){
+        courseRepository.save(course);
+        return "redirect:/newCourse";
+    }
+
+    @GetMapping("/deleteCourse/{id}")
+    public String deleteCourse(@PathVariable("id") Long id){
+        Course course = courseRepository.findById(id).orElse(null);
+        if (course != null){
+            courseRepository.delete(course);
+        }
+        return "redirect:/newCourse";
     }
 }
